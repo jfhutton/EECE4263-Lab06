@@ -12,6 +12,10 @@
 // I2C bus for the ESP32.  Defines below show should show these pin numbers!
 // For other boards, there may be a way to pre-initilize the 
 // Wire object with this data, but seems to be working with defaults.
+// For the Adafruit sensors, Sensor.begin() does the same thing, but you 
+// cannot do both lcd.init() and Sensor.begin()!  However, if we remove
+// the lcd, you will need to add back the Sensor.begin() or you will not
+// be able to talk.
 #define SCL 22  // Use default SCL for Huzzah32
 #define SDA 23  // Use default SDA for Huzzah32
 #define SensorI2CAddress 0x40  // This is the default address for the 7021 and HTU21DF Sensor.
@@ -33,15 +37,11 @@ float temp = 0;
 #define deepSleepTime TBD
 fix_above_line_then_delete_this_line_compile_error();
 
-// Timing variables
-unsigned long msCurrent, msNext;  // for simple timing
-
 // Prototype Functions
 void dummyPrototypeFunction ();
 
 void setup() {
   Serial.begin(115200);
-  //Serial.begin(74800);
   // wait for serial port to open
   while (!Serial) {
     delay(10);
